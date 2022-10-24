@@ -3,28 +3,38 @@ import 'package:get/get.dart';
 import 'package:golang_movie_app/services/api.dart';
 
 import '../models/movie.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+  HomePage({super.key});
+  final MovieController _controller = Get.put(MovieController());
 
   @override
   Widget build(BuildContext context) {
-    final movies = Get.find<MovieController>().movies;
-    print(movies);
+    // final movies = Get.find<MovieController>().movies;
+    // print(movies);
     return Scaffold(
       appBar: AppBar(
         title: const Text("Movies"),
       ),
-      body: GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+      body: Obx(
+        () => MasonryGridView.count(
           crossAxisCount: 2,
-          childAspectRatio: 3 / 2,
-          mainAxisExtent: 10,
-          crossAxisSpacing: 5,
+          mainAxisSpacing: 4,
+          crossAxisSpacing: 4,
+          itemBuilder: (context, index) =>
+              GridItem(movie: _controller.movies[index]),
+          itemCount: _controller.movies.length,
         ),
-        itemBuilder: (context, index) => GridItem(movie: movies[index]),
-        itemCount: movies.length,
       ),
+
+      // Obx(
+      //   () => ListView.builder(
+      //     itemBuilder: (context, index) =>
+      //         GridItem(movie: _controller.movies.value[index]),
+      //     itemCount: _controller.movies.value.length,
+      //   ),
+      // ),
     );
   }
 }
@@ -38,13 +48,19 @@ class GridItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridTile(
-        footer: Text(
-          movie.title,
-          style: Theme.of(context).textTheme.bodyText1,
-        ),
-        child: ColoredBox(
-          color: Theme.of(context).primaryColor,
+    return Container(
+        margin: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(30), color: Colors.grey),
+        height: 200,
+        width: 100,
+        child: Column(
+          children: [
+            Text(
+              movie.title,
+              style: TextStyle(fontSize: 16, color: Colors.red),
+            ),
+          ],
         ));
   }
 }
