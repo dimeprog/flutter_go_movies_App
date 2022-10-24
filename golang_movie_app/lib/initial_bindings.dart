@@ -1,5 +1,5 @@
 import 'package:get/instance_manager.dart';
-import 'package:golang_movie_app/services/api.dart';
+import 'package:golang_movie_app/services/movie_controller.dart';
 
 class InitalBindings extends Bindings {
   @override

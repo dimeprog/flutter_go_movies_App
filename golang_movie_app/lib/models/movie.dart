@@ -7,19 +7,19 @@ import 'dart:convert';
 class Movie {
   Movie({
     required this.id,
-    required this.isbn,
+    this.isbn,
     required this.title,
     this.director,
   });
 
   final String id;
-  final String isbn;
+  final String? isbn;
   final String title;
   Director? director;
 
   factory Movie.fromJson(Map<String, dynamic> json) => Movie(
         id: json["id"],
-        isbn: json["isbn"],
+        isbn: json["isbn"] ?? "",
         title: json["title"],
         director: Director.fromJson(json["director"]),
       );
